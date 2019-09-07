@@ -18,7 +18,8 @@ import {
   Image,
   Dimensions,
   TextInput,
-  Alert
+  Alert,
+  TouchableHighlight
 } from 'react-native';
 
 import {
@@ -48,8 +49,28 @@ const App = () => {
     // need to create constants file for urls.
 
     // react navigation is also pending, then add new page/component , which will show after login response data.
-    
 
+
+    if (email.length <= 0) {
+
+      Alert.alert(
+        'Message',
+        'Please enter email address',
+
+        { cancelable: true },
+      );
+      return;
+    }
+
+    if (password.length <= 0) {
+      Alert.alert(
+        'Message',
+        'Please enter Password',
+
+        { cancelable: true },
+      );
+      return;
+    }
 
     var loginUrl = "https://reqres.in/api/login?email=" + email + "&password=" + password
 
@@ -63,15 +84,15 @@ const App = () => {
         'Alert Title',
         response.data,
         [
-          
+
           {
             text: 'Cancel',
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
 
     })
@@ -117,28 +138,43 @@ const App = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'white',
+              backgroundColor: 'transparent',
             }}>
 
               <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: deviceWidth / 1.5 }}
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: deviceWidth / 1.2 }}
                 onChangeText={text => setEmail(text)}
                 value={email}
                 placeholder="Enter email address"
               />
 
               <TextInput
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: deviceWidth / 1.5 }}
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: deviceWidth / 1.2, marginTop: 20 }}
                 onChangeText={text => setpassword(text)}
                 value={password}
                 placeholder="Enter Password"
               />
 
-              <Button style={{ marginTop: 20 }} title="Login" onPress={() => {
+              {/* <Button style={{ marginTop: 20 }} color='black' title="Login" onPress={() => {
 
                 doLogin(email, password);
 
-              }} />
+              }} /> */}
+
+              <TouchableHighlight onPress={() => {
+                doLogin(email, password)
+              }} underlayColor="white">
+                <View style={{
+                  backgroundColor: 'black', justifyContent: 'center', alignItems: 'center',
+                  width: deviceWidth / 1.2, height: 40,
+                  marginTop: 20
+                }}>
+                  <Text style={{ fontSize: 20, color: 'white' }}> Login </Text>
+                </View>
+              </TouchableHighlight>
+
+
+
 
 
             </View>
